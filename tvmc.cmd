@@ -8,7 +8,8 @@ MD "%runpath%iqiyi">nul 2>nul
 CALL :FUN_iqiyi
 CALL :FUN_letv
 title VER:2015.07.24.05 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
-SET/p echoloop=离下次检测还有 : <nul
+SET/p echoloop=离下次检测还有 : <NUL
+REM 2h=7200s 4h=14400s 8h=28800s
 mimitimeout.runexe /t 14400 /nobreak
 GOTO :StartTrace
 
@@ -45,16 +46,10 @@ REM 站内直播
 mimiwget.runexe --timeout=30 --spider http://player.hz.letv.com/live.swf 2>"%runpath%TempDown\letv.in.live.html"
 FOR /f %%i in ('type "%runpath%TempDown\letv.in.live.html"^|findstr "Location:" 2^>nul^|mimised.runexe "s/Location:\s//g;s/?.*//g"') DO SET letv.in.live.swf=%%i
 ECHO in.live : %letv.in.live.swf%
-
-
-FOR /f %%i in ('echo %iqiyi.out.swf%^|mimised.runexe "s/http:.*flashplayer\///;s/\/.*//"') DO set iqiyi.out.swf.Date=%%i
-MD "%runpath%iqiyi\out\%iqiyi.out.swf.date%">nul 2>nul
-ECHO %iqiyi.out.swf%>"%runpath%iqiyi\out\%iqiyi.out.swf.date%\out.downlink.txt"
-REM ECHO out.date : %iqiyi.out.swf.date%
-
-
-
-GOTO :TrueEND
+FOR /f %%i in ('echo %letv.in.live.swf%^|mimised.runexe "s/.*\.com\/p\///;s/\/new.*//g;s/\//./g"') DO set letv.in.live.swf.Date=%%i
+MD "%runpath%letv\in.live\%letv.in.live.swf.Date%">nul 2>nul
+ECHO %letv.in.live.swf%>"%runpath%letv\in.live\%letv.in.live.swf.Date%\in.live.downlink.txt"
+mimiwget.runexe --timeout=30 -c %iqiyi.in.swf% -O "%runpath%letv\in.live\%letv.in.live.swf.Date%\letv.in.live.%letv.in.live.swf.File%">nul 2>nul
 
 :FUN_iqiyi
 REM 爱奇艺
