@@ -7,11 +7,45 @@ MD "%runpath%TempDown">nul 2>nul
 MD "%runpath%iqiyi">nul 2>nul
 CALL :FUN_iqiyi
 CALL :FUN_letv
+CALL :FUN_youku
 title VER:2015.08.27.06 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
 SET/p echoloop=离下次检测还有 : <NUL
 REM 2h=7200s 4h=14400s 8h=28800s
 mimitimeout.runexe /t 14400 /nobreak
 GOTO :StartTrace
+
+:FUN_youku
+REM 优酷
+DEL /q "%runpath%TempDown\youku.in.html">nul 2>nul
+DEL /q "%runpath%TempDown\youku.out.html">nul 2>nul
+DEL /q "%runpath%TempDown\youku.in.live.html">nul 2>nul
+ECHO 优酷
+
+REM 站内播放
+mimiwget.runexe --timeout=30 -c "http://www.iqiyi.com/dianshiju/20110608/5549a1c66a33f8e3.html" -O "%runpath%TempDown\iqiyi.in.html">nul 2>nul
+FOR /f "delims== tokens=2*" %%i in ('type "%runpath%TempDown\iqiyi.in.html"^|findstr "data-flashplayerparam-flashurl=.*\.swf" 2^>nul^|mimised.runexe "s/\""//g"') DO SET iqiyi.in.swf=%%i
+ECHO in : %iqiyi.in.swf%
+FOR /f %%i in ('echo %iqiyi.in.swf%^|mimised.runexe "s/http:.*flashplayer\///;s/\/.*//"') DO set iqiyi.in.swf.Date=%%i
+MD "%runpath%iqiyi\in\%iqiyi.in.swf.date%">nul 2>nul
+ECHO %iqiyi.in.swf%>"%runpath%iqiyi\in\%iqiyi.in.swf.date%\in.downlink.txt"
+REM ECHO in.date : %iqiyi.in.swf.date%
+FOR /f %%i in ('echo %iqiyi.in.swf%^|mimised.runexe "s/http:.*flashplayer.*\///"') DO set iqiyi.in.swf.File=%%i
+REM ECHO in.File : %iqiyi.in.swf.File%
+mimiwget.runexe --timeout=30 -c %iqiyi.in.swf% -O "%runpath%iqiyi\in\%iqiyi.in.swf.date%\iqiyi.in.%iqiyi.in.swf.File%">nul 2>nul
+
+REM 站外播放
+mimiwget.runexe --timeout=30 --spider http://v.youku.com/v_show/id_XMTI1ODc5MjU2NA==.html 2>"%runpath%TempDown\letv.out.html"
+FOR /f %%i in ('type "%runpath%TempDown\letv.out.html"^|findstr "playerUrl" 2^>nul^|mimised.runexe "s/.*http/http/g;s/\.swf.*;/.swf/g"') DO SET letv.out.swf=%%i
+ECHO out : %letv.out.swf%
+FOR /f %%i in ('echo %iqiyi.out.swf%^|mimised.runexe "s/http:.*flashplayer\///;s/\/.*//"') DO set iqiyi.out.swf.Date=%%i
+MD "%runpath%iqiyi\out\%iqiyi.out.swf.date%">nul 2>nul
+ECHO %iqiyi.out.swf%>"%runpath%iqiyi\out\%iqiyi.out.swf.date%\out.downlink.txt"
+REM ECHO out.date : %iqiyi.out.swf.date%
+FOR /f %%i in ('echo %iqiyi.out.swf%^|mimised.runexe "s/http:.*flashplayer.*\///"') DO set iqiyi.out.swf.File=%%i
+REM ECHO out.File : %iqiyi.out.swf.File%
+mimiwget.runexe --timeout=30 -c %iqiyi.out.swf% -O "%runpath%iqiyi\out\%iqiyi.out.swf.date%\iqiyi.out.%iqiyi.out.swf.File%">nul 2>nul
+
+GOTO :TrueEND
 
 :FUN_letv
 REM 乐视
