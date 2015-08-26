@@ -21,6 +21,7 @@ DEL /q "%runpath%TempDown\youku.out.html">nul 2>nul
 DEL /q "%runpath%TempDown\youku.in.live.html">nul 2>nul
 ECHO 优酷
 
+GOTO :tempskip
 REM 站内播放
 mimiwget.runexe --timeout=30 -c "http://www.iqiyi.com/dianshiju/20110608/5549a1c66a33f8e3.html" -O "%runpath%TempDown\iqiyi.in.html">nul 2>nul
 FOR /f "delims== tokens=2*" %%i in ('type "%runpath%TempDown\iqiyi.in.html"^|findstr "data-flashplayerparam-flashurl=.*\.swf" 2^>nul^|mimised.runexe "s/\""//g"') DO SET iqiyi.in.swf=%%i
@@ -32,18 +33,18 @@ REM ECHO in.date : %iqiyi.in.swf.date%
 FOR /f %%i in ('echo %iqiyi.in.swf%^|mimised.runexe "s/http:.*flashplayer.*\///"') DO set iqiyi.in.swf.File=%%i
 REM ECHO in.File : %iqiyi.in.swf.File%
 mimiwget.runexe --timeout=30 -c %iqiyi.in.swf% -O "%runpath%iqiyi\in\%iqiyi.in.swf.date%\iqiyi.in.%iqiyi.in.swf.File%">nul 2>nul
-
+:tempskip
 REM 站外播放
 mimiwget.runexe --timeout=30 --spider http://v.youku.com/v_show/id_XMTI1ODc5MjU2NA==.html 2>"%runpath%TempDown\letv.out.html"
 FOR /f %%i in ('type "%runpath%TempDown\letv.out.html"^|findstr "playerUrl" 2^>nul^|mimised.runexe "s/.*http/http/g;s/\.swf.*;/.swf/g"') DO SET letv.out.swf=%%i
 ECHO out : %letv.out.swf%
-FOR /f %%i in ('echo %iqiyi.out.swf%^|mimised.runexe "s/http:.*flashplayer\///;s/\/.*//"') DO set iqiyi.out.swf.Date=%%i
-MD "%runpath%iqiyi\out\%iqiyi.out.swf.date%">nul 2>nul
-ECHO %iqiyi.out.swf%>"%runpath%iqiyi\out\%iqiyi.out.swf.date%\out.downlink.txt"
-REM ECHO out.date : %iqiyi.out.swf.date%
-FOR /f %%i in ('echo %iqiyi.out.swf%^|mimised.runexe "s/http:.*flashplayer.*\///"') DO set iqiyi.out.swf.File=%%i
-REM ECHO out.File : %iqiyi.out.swf.File%
-mimiwget.runexe --timeout=30 -c %iqiyi.out.swf% -O "%runpath%iqiyi\out\%iqiyi.out.swf.date%\iqiyi.out.%iqiyi.out.swf.File%">nul 2>nul
+FOR /f %%i in ('echo %letv.out.swf%^|mimised.runexe "s/.*com\/v//g;s/\/v.*//g"') DO set letv.out.swf.Date=%%i
+MD "%runpath%iqiyi\out\%letv.out.swf.date%">nul 2>nul
+ECHO %letv.out.swf%>"%runpath%letv\out\%letv.out.swf.date%\out.downlink.txt"
+REM ECHO out.date : %letv.out.swf.Date%
+FOR /f %%i in ('echo %letv.out.swf%^|mimised.runexe "s/.*swf\///g;s/\.swf.*/.swf/g"') DO set letv.out.swf.File=%%i
+REM ECHO out.File : %letv.out.swf.File%
+mimiwget.runexe --timeout=30 -c %letv.out.swf% -O "%runpath%letv\out\%letv.out.swf.date%\letv.out.%letv.out.swf.File%">nul 2>nul
 
 GOTO :TrueEND
 
