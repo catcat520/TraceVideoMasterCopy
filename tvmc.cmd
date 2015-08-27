@@ -8,7 +8,7 @@ MD "%runpath%iqiyi">nul 2>nul
 CALL :FUN_iqiyi
 CALL :FUN_letv
 CALL :FUN_youku
-title VER:2015.08.28.12 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
+title VER:2015.08.28.13 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
 SET/p echoloop=离下次检测还有 : <NUL
 REM 2h=7200s 4h=14400s 8h=28800s
 mimitimeout.runexe /t 14400 /nobreak
@@ -19,7 +19,7 @@ REM 优酷
 DEL /q "%runpath%TempDown\youku.in.html">nul 2>nul
 DEL /q "%runpath%TempDown\youku.out.loader.html">nul 2>NUL
 DEL /q "%runpath%TempDown\youku.out.player.html">nul 2>nul
-ECHO 优酷
+ECHO 优酷 uptime : %date%%time%
 
 REM 站内播放
 REM 播放器.swf
@@ -66,7 +66,7 @@ REM 乐视
 DEL /q "%runpath%TempDown\letv.in.html">nul 2>nul
 DEL /q "%runpath%TempDown\letv.out.html">nul 2>nul
 DEL /q "%runpath%TempDown\letv.in.live.html">nul 2>nul
-ECHO 乐视
+ECHO 乐视 uptime : %date%%time%
 
 REM 站内播放
 mimiwget.runexe --timeout=30 -c "http://www.letv.com/ptv/vplay/22840741.html" -O "%runpath%TempDown\letv.in.html">nul 2>nul
@@ -106,7 +106,7 @@ REM 爱奇艺
 DEL /q "%runpath%TempDown\iqiyi.in.html">nul 2>nul
 DEL /q "%runpath%TempDown\iqiyi.out.html">nul 2>nul
 DEL /q "%runpath%TempDown\iqiyi.in.live.html">nul 2>nul
-ECHO 爱奇艺
+ECHO 爱奇艺 uptime : %date%%time%
 
 REM 站内播放
 mimiwget.runexe --timeout=30 -c "http://www.iqiyi.com/dianshiju/20110608/5549a1c66a33f8e3.html" -O "%runpath%TempDown\iqiyi.in.html">nul 2>nul
