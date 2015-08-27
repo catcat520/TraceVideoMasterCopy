@@ -1,4 +1,4 @@
-@ECHO OFF
+REM @ECHO OFF
 CLS
 :StartTrace
 set runpath=%~dp0
@@ -45,7 +45,7 @@ ECHO %youku.out.loader.swf%>"%runpath%youku\out\%youku.out.loader.swf.date%\out.
 REM ECHO out.date : %youku.out.loader.swf.Date%
 FOR /f %%i in ('echo %youku.out.loader.swf%^|mimised.runexe "s/.*swf\///g;s/\.swf.*/.swf/g"') DO set youku.out.loader.swf.File=%%i
 REM ECHO out.loader.File : %youku.out.loader.swf.File%
-mimiwget.runexe --timeout=30 -c %youku.out.swf% -O "%runpath%youku\out\%youku.out.loader.swf.date%\youku.out.%youku.out.loader.swf.File%">nul 2>NUL
+mimiwget.runexe --timeout=30 -c %youku.out.loader.swf% -O "%runpath%youku\out\%youku.out.loader.swf.date%\youku.out.%youku.out.loader.swf.File%">nul 2>NUL
 
 REM 播放器.swf
 mimiwget.runexe --timeout=30 -c http://www.youku.com/show_page/id_zaf02ac580b5711e5a080.html -O "%runpath%TempDown\youku.out.player.html">nul 2>nul
