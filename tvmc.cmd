@@ -1,4 +1,4 @@
-REM @ECHO OFF
+@ECHO OFF
 CLS
 :StartTrace
 set runpath=%~dp0
@@ -8,7 +8,7 @@ MD "%runpath%iqiyi">nul 2>nul
 CALL :FUN_iqiyi
 CALL :FUN_letv
 CALL :FUN_youku
-title VER:2015.08.28.10 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
+title VER:2015.08.28.11 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
 SET/p echoloop=离下次检测还有 : <NUL
 REM 2h=7200s 4h=14400s 8h=28800s
 mimitimeout.runexe /t 14400 /nobreak
@@ -49,13 +49,13 @@ mimiwget.runexe --timeout=30 -c %youku.out.loader.swf% -O "%runpath%youku\out\%y
 
 REM 播放器.swf
 mimiwget.runexe --timeout=30 -c http://www.youku.com/show_page/id_zaf02ac580b5711e5a080.html -O "%runpath%TempDown\youku.out.player.html">nul 2>nul
-FOR /f %%i in ('type "%runpath%TempDown\youku.out.player.html"^|findstr "player" 2^>nul^|mimised.runexe "s/.*http:/http:/g;s/\.swf.*/.swf/g"') DO SET youku.out.player.swf=%%i
+FOR /f %%i in ('type "%runpath%TempDown\youku.out.player.html"^|findstr "player:" 2^>nul^|mimised.runexe "s/.*http:/http:/g;s/\.swf.*/.swf/g"') DO SET youku.out.player.swf=%%i
 ECHO out.player.swf : %youku.out.player.swf%
 FOR /f %%i in ('echo %youku.out.player.swf%^|mimised.runexe "s/.*com\/v//g;s/\/v.*//g"') DO set youku.out.player.swf.Date=%%i
 MD "%runpath%youku\out\%youku.out.player.swf.date%">nul 2>nul
-ECHO %youku.out.player.swf%>"%runpath%youku\out\%youku.out.swf.date%\out.player.downlink.txt"
+ECHO %youku.out.player.swf%>"%runpath%youku\out\%youku.out.player.swf.date%\out.player.downlink.txt"
 REM ECHO out.date : %youku.out.player.swf.Date%
-FOR /f %%i in ('echo %youku.out.swf%^|mimised.runexe "s/.*swf\///g;s/\.swf.*/.swf/g"') DO set youku.out.player.swf.File=%%i
+FOR /f %%i in ('echo %youku.out.player.swf%^|mimised.runexe "s/.*swf\///g;s/\.swf.*/.swf/g"') DO set youku.out.player.swf.File=%%i
 REM ECHO out.File : %youku.out.player.swf.File%
 mimiwget.runexe --timeout=30 -c %youku.out.player.swf% -O "%runpath%youku\out\%youku.out.player.swf.date%\youku.out.%youku.out.player.swf.File%">nul 2>NUL
 
