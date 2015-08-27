@@ -4,7 +4,9 @@ CLS
 set runpath=%~dp0
 path %path%;%runpath%mimiLIB
 MD "%runpath%TempDown">nul 2>nul
-MD "%runpath%iqiyi">nul 2>nul
+MD "%runpath%iqiyi">nul 2>NUL
+MD "%runpath%letv">nul 2>NUL
+MD "%runpath%youku">nul 2>nul
 CALL :FUN_iqiyi
 CALL :FUN_letv
 CALL :FUN_youku
