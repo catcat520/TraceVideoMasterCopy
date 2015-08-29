@@ -10,11 +10,11 @@ MD "%runpath%youku">nul 2>nul
 CALL :FUN_iqiyi
 CALL :FUN_letv
 CALL :FUN_youku
-CALL :xFUN_ku6
+REM CALL :FUN_ku6 dbing
+REM CALL :FUN_56 dbing
 CALL :xFUN_qq
 CALL :xFUN_sohu
 CALL :xFUN_tudou
-CALL :xFUN_56
 CALL :xFUN_17173
 CALL :xFUN_pps
 CALL :xFUN_pptv
