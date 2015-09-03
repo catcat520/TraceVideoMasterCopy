@@ -10,15 +10,15 @@ MD "%runpath%youku">nul 2>nul
 CALL :FUN_iqiyi
 CALL :FUN_letv
 CALL :FUN_youku
+CALL :xFUN_sohu
 REM CALL :FUN_ku6 dbing
 REM CALL :FUN_56 dbing
+REM CALL :FUN_pps dbing
 CALL :xFUN_qq
-CALL :xFUN_sohu
 CALL :xFUN_tudou
 CALL :xFUN_17173
-CALL :xFUN_pps
 CALL :xFUN_pptv
-title VER:2015.08.28.13 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
+title VER:2015.09.04.14 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
 SET/p echoloop=离下次检测还有 : <NUL
 REM 2h=7200s 4h=14400s 8h=28800s
 mimitimeout.runexe /t 14400 /nobreak
