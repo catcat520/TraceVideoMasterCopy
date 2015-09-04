@@ -18,7 +18,7 @@ CALL :xFUN_qq
 CALL :xFUN_tudou
 CALL :xFUN_17173
 CALL :xFUN_pptv
-title VER:2015.09.04.14 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
+title VER:2015.09.05.15 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
 SET/p echoloop=离下次检测还有 : <NUL
 REM 2h=7200s 4h=14400s 8h=28800s
 mimitimeout.runexe /t 14400 /nobreak
@@ -110,6 +110,19 @@ ECHO %letv.in.live.swf%>"%runpath%letv\in.live\%letv.in.live.swf.Date%\in.live.d
 FOR /f %%i in ('echo %letv.in.live.swf%^|mimised.runexe "s/.*\/newplayer\///g"') DO set letv.in.live.swf.File=%%i
 mimiwget.runexe --timeout=30 -c %letv.in.live.swf% -O "%runpath%letv\in.live\%letv.in.live.swf.Date%\letv.in.live.%letv.in.live.swf.File%">nul 2>nul
 GOTO :TrueEND
+
+GOTO :skip站内直播
+REM 站内直播
+mimiwget.runexe --timeout=30 --spider http://player.hz.letv.com/live.swf 2>"%runpath%TempDown\letv.in.live.html"
+FOR /f %%i in ('type "%runpath%TempDown\letv.in.live.html"^|findstr "Location:" 2^>nul^|mimised.runexe "s/Location:\s//g;s/?.*//g"') DO SET letv.in.live.swf=%%i
+ECHO in.live : %letv.in.live.swf%
+FOR /f %%i in ('echo %letv.in.live.swf%^|mimised.runexe "s/.*\.com\/p\///;s/\/new.*//g;s/\//./g"') DO set letv.in.live.swf.Date=%%i
+MD "%runpath%letv\in.live\%letv.in.live.swf.Date%">nul 2>nul
+ECHO %letv.in.live.swf%>"%runpath%letv\in.live\%letv.in.live.swf.Date%\in.live.downlink.txt"
+FOR /f %%i in ('echo %letv.in.live.swf%^|mimised.runexe "s/.*\/newplayer\///g"') DO set letv.in.live.swf.File=%%i
+mimiwget.runexe --timeout=30 -c %letv.in.live.swf% -O "%runpath%letv\in.live\%letv.in.live.swf.Date%\letv.in.live.%letv.in.live.swf.File%">nul 2>nul
+GOTO :TrueEND
+:skip站内直播
 
 :FUN_iqiyi
 REM 爱奇艺
