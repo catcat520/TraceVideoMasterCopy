@@ -111,8 +111,7 @@ FOR /f %%i in ('echo %letv.in.live.swf%^|mimised.runexe "s/.*\/newplayer\///g"')
 mimiwget.runexe --timeout=30 -c %letv.in.live.swf% -O "%runpath%letv\in.live\%letv.in.live.swf.Date%\letv.in.live.%letv.in.live.swf.File%">nul 2>nul
 GOTO :TrueEND
 
-GOTO :skip站内直播
-REM 站内直播
+REM 站内直播 稳定旧版本
 mimiwget.runexe --timeout=30 --spider http://player.hz.letv.com/live.swf 2>"%runpath%TempDown\letv.in.live.html"
 FOR /f %%i in ('type "%runpath%TempDown\letv.in.live.html"^|findstr "Location:" 2^>nul^|mimised.runexe "s/Location:\s//g;s/?.*//g"') DO SET letv.in.live.swf=%%i
 ECHO in.live : %letv.in.live.swf%
@@ -122,7 +121,6 @@ ECHO %letv.in.live.swf%>"%runpath%letv\in.live\%letv.in.live.swf.Date%\in.live.d
 FOR /f %%i in ('echo %letv.in.live.swf%^|mimised.runexe "s/.*\/newplayer\///g"') DO set letv.in.live.swf.File=%%i
 mimiwget.runexe --timeout=30 -c %letv.in.live.swf% -O "%runpath%letv\in.live\%letv.in.live.swf.Date%\letv.in.live.%letv.in.live.swf.File%">nul 2>nul
 GOTO :TrueEND
-:skip站内直播
 
 :FUN_iqiyi
 REM 爱奇艺
