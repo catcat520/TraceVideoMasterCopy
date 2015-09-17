@@ -10,7 +10,7 @@ MD "%runpath%youku">nul 2>nul
 CALL :FUN_iqiyi
 CALL :FUN_letv
 CALL :FUN_youku
-CALL :xFUN_sohu
+CALL :FUN_sohu
 REM CALL :FUN_ku6 dbing
 REM CALL :FUN_56 dbing
 REM CALL :FUN_pps dbing
@@ -18,7 +18,7 @@ CALL :xFUN_qq
 CALL :xFUN_tudou
 CALL :xFUN_17173
 CALL :xFUN_pptv
-title VER:2015.09.06.16 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
+title VER:2015.09.17.17 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
 SET/p echoloop=离下次检测还有 : <NUL
 REM 2h=7200s 4h=14400s 8h=28800s
 mimitimeout.runexe /t 14400 /nobreak
@@ -57,6 +57,7 @@ FOR /f %%i in ('echo %youku.out.loader.swf%^|mimised.runexe "s/.*swf\///g;s/\.sw
 REM ECHO out.loader.File : %youku.out.loader.swf.File%
 mimiwget.runexe --timeout=30 -c %youku.out.loader.swf% -O "%runpath%youku\out\%youku.out.loader.swf.date%\youku.out.%youku.out.loader.swf.File%">nul 2>NUL
 
+REM 站外播放
 REM 播放器.swf
 mimiwget.runexe --timeout=30 -c http://www.youku.com/show_page/id_zaf02ac580b5711e5a080.html -O "%runpath%TempDown\youku.out.player.html">nul 2>nul
 FOR /f %%i in ('type "%runpath%TempDown\youku.out.player.html"^|findstr "player:" 2^>nul^|mimised.runexe "s/.*http:/http:/g;s/\.swf.*/.swf/g"') DO SET youku.out.player.swf=%%i
@@ -70,6 +71,27 @@ REM ECHO out.File : %youku.out.player.swf.File%
 mimiwget.runexe --timeout=30 -c %youku.out.player.swf% -O "%runpath%youku\out\%youku.out.player.swf.date%\youku.out.%youku.out.player.swf.File%">nul 2>NUL
 
 GOTO :TrueEND
+
+:FUN_sohu
+REM 搜狐
+DEL /q "%runpath%TempDown\sohu.in.html">nul 2>nul
+ECHO 搜狐 uptime : %date%%time%
+
+REM 站内播放
+mimiwget.runexe --timeout=30 -c "http://tv.sohu.com/20090316/n262826768.shtml" -O "%runpath%TempDown\sohu.in.html">nul 2>nul
+FOR /f %%i in ('type "%runpath%TempDown\sohu.in.html"^|findstr ".swf"^|findstr "tv"^|findstr "swf/2"^|findstr "^vrs" 2^>nul^|mimised.runexe "s/.*http/http/g;s/Main\..*/Main.swf/g"') DO SET sohu.in.swf=%%i
+ECHO in : %sohu.in.swf%
+pause
+FOR /f %%i in ('echo %letv.in.swf%^|mimised.runexe "s/http:\/\/.*p\///g;s/\/new.*//g;s/\//./g"') DO set letv.in.swf.Date=%%i
+MD "%runpath%letv\in\%letv.in.swf.date%">nul 2>nul
+ECHO %letv.in.swf%>"%runpath%letv\in\%letv.in.swf.date%\in.downlink.txt"
+REM ECHO in.date : %letv.in.swf.date%
+FOR /f %%i in ('echo %letv.in.swf%^|mimised.runexe "s/http:\/\/.*\///g"') DO set letv.in.swf.File=%%i
+REM ECHO in.File : %letv.in.swf.File%
+mimiwget.runexe --timeout=30 -c %letv.in.swf% -O "%runpath%letv\in\%letv.in.swf.date%\letv.in.%letv.in.swf.File%">nul 2>nul
+GOTO :TrueEND
+type n262826768.shtml|findstr ".swf"|findstr "tv"|findstr "swf/2"|findstr "^vrs"
+
 
 :FUN_letv
 REM 乐视
