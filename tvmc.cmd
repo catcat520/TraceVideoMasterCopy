@@ -18,7 +18,7 @@ CALL :xFUN_qq
 CALL :xFUN_tudou
 CALL :xFUN_17173
 CALL :xFUN_pptv
-title VER:2015.09.17.17 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
+title VER:2015.09.17.18 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
 SET/p echoloop=离下次检测还有 : <NUL
 REM 2h=7200s 4h=14400s 8h=28800s
 mimitimeout.runexe /t 14400 /nobreak
@@ -85,13 +85,10 @@ FOR /f %%i in ('echo %sohu.in.swf%^|mimised.runexe "s/.*http/http/g;s/\/Main\..*
 MD "%runpath%sohu\in\%sohu.in.swf.date%">nul 2>NUL
 ECHO %sohu.in.swf%>"%runpath%sohu\in\%sohu.in.swf.date%\in.downlink.txt"
 REM ECHO in.date : %sohu.in.swf.date%
-pause
-FOR /f %%i in ('echo %letv.in.swf%^|mimised.runexe "s/http:\/\/.*\///g"') DO set letv.in.swf.File=%%i
+FOR /f %%i in ('echo %sohu.in.swf%^|mimised.runexe "s/.*Main\.swf.*/Main.swf/g"') DO set sohu.in.swf.File=%%i
 REM ECHO in.File : %letv.in.swf.File%
-mimiwget.runexe --timeout=30 -c %letv.in.swf% -O "%runpath%letv\in\%letv.in.swf.date%\letv.in.%letv.in.swf.File%">nul 2>nul
+mimiwget.runexe --timeout=30 -c %sohu.in.swf% -O "%runpath%sohu\in\%sohu.in.swf.date%\sohu.in.%sohu.in.swf.File%">nul 2>nul
 GOTO :TrueEND
-type n262826768.shtml|findstr ".swf"|findstr "tv"|findstr "swf/2"|findstr "^vrs"
-
 
 :FUN_letv
 REM 乐视
