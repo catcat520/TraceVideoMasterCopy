@@ -81,11 +81,11 @@ REM 站内播放
 mimiwget.runexe --timeout=30 -c "http://tv.sohu.com/20090316/n262826768.shtml" -O "%runpath%TempDown\sohu.in.html">nul 2>nul
 FOR /f %%i in ('type "%runpath%TempDown\sohu.in.html"^|findstr ".swf"^|findstr "tv"^|findstr "swf/2"^|findstr "^vrs" 2^>nul^|mimised.runexe "s/.*http/http/g;s/Main\..*/Main.swf/g"') DO SET sohu.in.swf=%%i
 ECHO in : %sohu.in.swf%
+FOR /f %%i in ('echo %sohu.in.swf%^|mimised.runexe "s/.*http/http/g;s/\/Main\..*//g;s/.*\/swf\///g"') DO set sohu.in.swf.Date=%%i
+MD "%runpath%sohu\in\%sohu.in.swf.date%">nul 2>NUL
+ECHO %sohu.in.swf%>"%runpath%sohu\in\%sohu.in.swf.date%\in.downlink.txt"
+REM ECHO in.date : %sohu.in.swf.date%
 pause
-FOR /f %%i in ('echo %letv.in.swf%^|mimised.runexe "s/http:\/\/.*p\///g;s/\/new.*//g;s/\//./g"') DO set letv.in.swf.Date=%%i
-MD "%runpath%letv\in\%letv.in.swf.date%">nul 2>nul
-ECHO %letv.in.swf%>"%runpath%letv\in\%letv.in.swf.date%\in.downlink.txt"
-REM ECHO in.date : %letv.in.swf.date%
 FOR /f %%i in ('echo %letv.in.swf%^|mimised.runexe "s/http:\/\/.*\///g"') DO set letv.in.swf.File=%%i
 REM ECHO in.File : %letv.in.swf.File%
 mimiwget.runexe --timeout=30 -c %letv.in.swf% -O "%runpath%letv\in\%letv.in.swf.date%\letv.in.%letv.in.swf.File%">nul 2>nul
