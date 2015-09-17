@@ -11,10 +11,10 @@ CALL :FUN_iqiyi
 CALL :FUN_letv
 CALL :FUN_youku
 CALL :FUN_sohu
+CALL :FUN_qq
 REM CALL :FUN_ku6 dbing
 REM CALL :FUN_56 dbing
 REM CALL :FUN_pps dbing
-CALL :xFUN_qq
 CALL :xFUN_tudou
 CALL :xFUN_17173
 CALL :xFUN_pptv
