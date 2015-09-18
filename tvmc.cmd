@@ -18,7 +18,7 @@ REM CALL :FUN_56 dbing
 REM CALL :FUN_pps dbing
 CALL :xFUN_17173
 CALL :xFUN_pptv
-title VER:2015.09.19.21 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
+title VER:2015.09.19.22 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
 SET/p echoloop=离下次检测还有 : <NUL
 REM 2h=7200s 4h=14400s 8h=28800s
 mimitimeout.runexe /t 14400 /nobreak
@@ -81,13 +81,12 @@ mimiwget.runexe --timeout=30 -c "http://www.tudou.com/albumplay/HzK-zOzBjxo/tPHB
 FOR /f %%i in ('type "%runpath%TempDown\tudou.in.html"^|findstr ",playerUrl:" 2^>nul^|sed "s/.*http/http/g;s/\.swf.*/\.swf/g"') DO SET tudou.in.swf=%%i
 ECHO in : %tudou.in.swf%
 FOR /f %%i in ('echo %tudou.in.swf%^|mimised.runexe "s/.*PortalPlayer_//g;s/\.swf.*//g"') DO set tudou.in.swf.Date=%%i
-MD "%runpath%sohu\in\%tudou.in.swf.date%">nul 2>NUL
+MD "%runpath%tudou\in\%tudou.in.swf.date%">nul 2>NUL
 ECHO %tudou.in.swf%>"%runpath%tudou\in\%tudou.in.swf.date%\in.downlink.txt"
-pause
-REM ECHO in.date : %sohu.in.swf.date%
-FOR /f %%i in ('echo %sohu.in.swf%^|mimised.runexe "s/.*Main\.swf.*/Main.swf/g"') DO set sohu.in.swf.File=%%i
-REM ECHO in.File : %letv.in.swf.File%
-mimiwget.runexe --timeout=30 -c %sohu.in.swf% -O "%runpath%sohu\in\%sohu.in.swf.date%\sohu.in.%sohu.in.swf.File%">nul 2>nul
+REM ECHO in.date : %tudou.in.swf.date%
+FOR /f %%i in ('echo %tudou.in.swf%^|mimised.runexe "s/.*Main\.swf.*/Main.swf/g"') DO set sohu.in.swf.File=PortalPlayer.swf
+REM ECHO in.File : %tudou.in.swf.File%
+mimiwget.runexe --timeout=30 -c %tudou.in.swf% -O "%runpath%tudou\in\%tudou.in.swf.date%\tudou.in.%sohu.in.swf.File%">nul 2>nul
 GOTO :TrueEND
 
 :FUN_qq
