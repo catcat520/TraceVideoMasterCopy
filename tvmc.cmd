@@ -18,7 +18,7 @@ REM CALL :FUN_pps dbing
 CALL :xFUN_tudou
 CALL :xFUN_17173
 CALL :xFUN_pptv
-title VER:2015.09.17.18 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
+title VER:2015.09.18.19 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
 SET/p echoloop=离下次检测还有 : <NUL
 REM 2h=7200s 4h=14400s 8h=28800s
 mimitimeout.runexe /t 14400 /nobreak
@@ -69,7 +69,19 @@ REM ECHO out.date : %youku.out.player.swf.Date%
 FOR /f %%i in ('echo %youku.out.player.swf%^|mimised.runexe "s/.*swf\///g;s/\.swf.*/.swf/g"') DO set youku.out.player.swf.File=%%i
 REM ECHO out.File : %youku.out.player.swf.File%
 mimiwget.runexe --timeout=30 -c %youku.out.player.swf% -O "%runpath%youku\out\%youku.out.player.swf.date%\youku.out.%youku.out.player.swf.File%">nul 2>NUL
+GOTO :TrueEND
 
+:FUN_qq
+REM QQ
+ECHO QQ uptime : %date%%time%
+
+REM 站内播放
+MD "%runpath%qq\in\">nul 2>NUL
+mimiwget.runexe --timeout=30 -c "http://imgcache.qq.com/tencentvideo_v1/player/TencentPlayer.swf" -O "%runpath%qq\in\qq.in.player.swf">nul 2>NUL
+
+REM 站内播放
+MD "%runpath%qq\out\">nul 2>NUL
+mimiwget.runexe --timeout=30 -c "http://static.video.qq.com/TPout.swf" -O "%runpath%qq\out\qq.out.player.swf">nul 2>nul
 GOTO :TrueEND
 
 :FUN_sohu
