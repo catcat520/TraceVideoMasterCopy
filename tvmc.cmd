@@ -18,7 +18,7 @@ REM CALL :FUN_pps dbing
 CALL :xFUN_tudou
 CALL :xFUN_17173
 CALL :xFUN_pptv
-title VER:2015.09.18.19 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
+title VER:2015.09.18.20 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
 SET/p echoloop=离下次检测还有 : <NUL
 REM 2h=7200s 4h=14400s 8h=28800s
 mimitimeout.runexe /t 14400 /nobreak
@@ -73,13 +73,15 @@ GOTO :TrueEND
 
 :FUN_qq
 REM QQ
-ECHO QQ uptime : %date%%time%
+ECHO 腾讯 uptime : %date%%time%
 
 REM 站内播放
+ECHO in : http://imgcache.qq.com/tencentvideo_v1/player/TencentPlayer.swf
 MD "%runpath%qq\in\">nul 2>NUL
 mimiwget.runexe --timeout=30 -c "http://imgcache.qq.com/tencentvideo_v1/player/TencentPlayer.swf" -O "%runpath%qq\in\qq.in.player.swf">nul 2>NUL
 
 REM 站内播放
+ECHO out : http://static.video.qq.com/TPout.swf
 MD "%runpath%qq\out\">nul 2>NUL
 mimiwget.runexe --timeout=30 -c "http://static.video.qq.com/TPout.swf" -O "%runpath%qq\out\qq.out.player.swf">nul 2>nul
 GOTO :TrueEND
