@@ -12,10 +12,10 @@ CALL :FUN_letv
 CALL :FUN_youku
 CALL :FUN_sohu
 CALL :FUN_qq
+CALL :FUN_tudou
 REM CALL :FUN_ku6 dbing
 REM CALL :FUN_56 dbing
 REM CALL :FUN_pps dbing
-CALL :xFUN_tudou
 CALL :xFUN_17173
 CALL :xFUN_pptv
 title VER:2015.09.18.20 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
@@ -69,6 +69,25 @@ REM ECHO out.date : %youku.out.player.swf.Date%
 FOR /f %%i in ('echo %youku.out.player.swf%^|mimised.runexe "s/.*swf\///g;s/\.swf.*/.swf/g"') DO set youku.out.player.swf.File=%%i
 REM ECHO out.File : %youku.out.player.swf.File%
 mimiwget.runexe --timeout=30 -c %youku.out.player.swf% -O "%runpath%youku\out\%youku.out.player.swf.date%\youku.out.%youku.out.player.swf.File%">nul 2>NUL
+GOTO :TrueEND
+
+:FUN_tudou
+REM 土豆
+DEL /q "%runpath%TempDown\tudou.in.html">nul 2>nul
+ECHO 土豆 uptime : %date%%time%
+
+REM 站内播放
+mimiwget.runexe --timeout=30 -c "http://www.tudou.com/albumplay/HzK-zOzBjxo/tPHBZ9xQGmU.html" -O "%runpath%TempDown\tudou.in.html">nul 2>nul
+FOR /f %%i in ('type "%runpath%TempDown\tudou.in.html"^|findstr ".swf"^|findstr "tv"^|findstr "swf/2"^|findstr "^vrs" 2^>nul^|mimised.runexe "s/.*http/http/g;s/Main\..*/Main.swf/g"') DO SET tudou.in.swf=%%i
+ECHO in : %tudou.in.swf%
+pause
+FOR /f %%i in ('echo %sohu.in.swf%^|mimised.runexe "s/.*http/http/g;s/\/Main\..*//g;s/.*\/swf\///g"') DO set sohu.in.swf.Date=%%i
+MD "%runpath%sohu\in\%sohu.in.swf.date%">nul 2>NUL
+ECHO %sohu.in.swf%>"%runpath%sohu\in\%sohu.in.swf.date%\in.downlink.txt"
+REM ECHO in.date : %sohu.in.swf.date%
+FOR /f %%i in ('echo %sohu.in.swf%^|mimised.runexe "s/.*Main\.swf.*/Main.swf/g"') DO set sohu.in.swf.File=%%i
+REM ECHO in.File : %letv.in.swf.File%
+mimiwget.runexe --timeout=30 -c %sohu.in.swf% -O "%runpath%sohu\in\%sohu.in.swf.date%\sohu.in.%sohu.in.swf.File%">nul 2>nul
 GOTO :TrueEND
 
 :FUN_qq
