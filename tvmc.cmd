@@ -18,7 +18,7 @@ REM CALL :FUN_ku6 dbing
 REM CALL :FUN_56 dbing
 REM CALL :FUN_pps dbing
 CALL :xFUN_17173
-title VER:2015.09.19.23 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
+title VER:2015.09.21.24 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
 SET/p echoloop=离下次检测还有 : <NUL
 REM 2h=7200s 4h=14400s 8h=28800s
 mimitimeout.runexe /t 14400 /nobreak
@@ -224,9 +224,10 @@ DEL /q "%runpath%TempDown\pptv.in.live.html">nul 2>nul
 ECHO 聚力 uptime : %date%%time%
 
 REM 站内播放
-mimiwget.runexe --timeout=30 -c "http://www.iqiyi.com/dianshiju/20110608/5549a1c66a33f8e3.html" -O "%runpath%TempDown\iqiyi.in.html">nul 2>nul
-FOR /f "delims== tokens=2*" %%i in ('type "%runpath%TempDown\iqiyi.in.html"^|findstr "data-flashplayerparam-flashurl=.*\.swf" 2^>nul^|mimised.runexe "s/\""//g"') DO SET iqiyi.in.swf=%%i
-ECHO in : %iqiyi.in.swf%
+mimiwget.runexe --timeout=30 --spider "http://player.pptv.com/v/F21k41IlHFq9O6M.swf" -O "%runpath%TempDown\pptv.in.html">nul 2>nul
+FOR /f "delims== tokens=2*" %%i in ('type "%runpath%TempDown\pptv.in.html"^|findstr "Location:" 2^>nul^|mimised.runexe "s/.*http:/http:/g;s/\.swf.*/\.swf/g"') DO SET pptv.in.swf=%%i
+ECHO in : %pptv.in.swf%
+pause
 FOR /f %%i in ('echo %iqiyi.in.swf%^|mimised.runexe "s/http:.*flashplayer\///;s/\/.*//"') DO set iqiyi.in.swf.Date=%%i
 MD "%runpath%iqiyi\in\%iqiyi.in.swf.date%">nul 2>nul
 ECHO %iqiyi.in.swf%>"%runpath%iqiyi\in\%iqiyi.in.swf.date%\in.downlink.txt"
