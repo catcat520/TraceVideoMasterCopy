@@ -14,11 +14,11 @@ CALL :FUN_sohu
 CALL :FUN_qq
 CALL :FUN_tudou
 CALL :FUN_pptv
+CALL :FUN_17173
 REM CALL :FUN_ku6 dbing
 REM CALL :FUN_56 dbing
 REM CALL :FUN_pps dbing
-CALL :xFUN_17173
-title VER:2015.09.21.24 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
+title VER:2015.09.21.25 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
 SET/p echoloop=离下次检测还有 : <NUL
 REM 2h=7200s 4h=14400s 8h=28800s
 mimitimeout.runexe /t 14400 /nobreak
@@ -227,26 +227,25 @@ REM 站内播放
 mimiwget.runexe --timeout=30 --spider "http://player.pptv.com/v/F21k41IlHFq9O6M.swf" 2>"%runpath%TempDown\pptv.in.html"
 FOR /f %%i in ('type "%runpath%TempDown\pptv.in.html"^|findstr "Location:" 2^>nul^|mimised.runexe "s/.*http:/http:/g;s/\.swf.*/\.swf/g"') DO SET pptv.in.swf=%%i
 ECHO in : %pptv.in.swf%
-pause
-FOR /f %%i in ('echo %iqiyi.in.swf%^|mimised.runexe "s/http:.*flashplayer\///;s/\/.*//"') DO set iqiyi.in.swf.Date=%%i
-MD "%runpath%iqiyi\in\%iqiyi.in.swf.date%">nul 2>nul
-ECHO %iqiyi.in.swf%>"%runpath%iqiyi\in\%iqiyi.in.swf.date%\in.downlink.txt"
-REM ECHO in.date : %iqiyi.in.swf.date%
-FOR /f %%i in ('echo %iqiyi.in.swf%^|mimised.runexe "s/http:.*flashplayer.*\///"') DO set iqiyi.in.swf.File=%%i
-REM ECHO in.File : %iqiyi.in.swf.File%
-mimiwget.runexe --timeout=30 -c %iqiyi.in.swf% -O "%runpath%iqiyi\in\%iqiyi.in.swf.date%\iqiyi.in.%iqiyi.in.swf.File%">nul 2>nul
+FOR /f %%i in ('echo %pptv.in.swf%^|mimised.runexe "s/.*ikan\///g;s/\/.*//g"') DO set pptv.in.swf.Date=%%i
+MD "%runpath%pptv\in\%pptv.in.swf.date%">nul 2>nul
+ECHO %pptv.in.swf%>"%runpath%pptv\in\%pptv.in.swf.date%\in.downlink.txt"
+REM ECHO in.date : %pptv.in.swf.date%
+FOR /f %%i in ('echo %pptv.in.swf%^|mimised.runexe "s/.*[0-9]\///g"') DO set pptv.in.swf.File=%%i
+REM ECHO in.File : %pptv.in.swf.File%
+mimiwget.runexe --timeout=30 -c %pptv.in.swf% -O "%runpath%pptv\in\%pptv.in.swf.date%\pptv.in.%pptv.in.swf.File%">nul 2>nul
 
 REM 站内直播
-mimiwget.runexe --timeout=30 -c "http://www.iqiyi.com/c_19rrgv1kfm/" -O "%runpath%TempDown\iqiyi.in.live.html">nul 2>nul
-FOR /f "delims== tokens=2*" %%i in ('type "%runpath%TempDown\iqiyi.in.live.html"^|findstr "data-flashplayerparam-flashurl=.*\.swf" 2^>nul^|mimised.runexe "s/\""//g"') DO SET iqiyi.in.live.swf=%%i
-ECHO in.live : %iqiyi.in.live.swf%
-FOR /f %%i in ('echo %iqiyi.in.live.swf%^|mimised.runexe "s/http:.*flashplayer\///;s/\/.*//"') DO set iqiyi.in.live.swf.Date=%%i
-MD "%runpath%iqiyi\in.live\%iqiyi.in.live.swf.date%">nul 2>nul
-ECHO %iqiyi.in.live.swf%>"%runpath%iqiyi\in.live\%iqiyi.in.live.swf.date%\in.live.downlink.txt"
-REM ECHO in.live.date : %iqiyi.in.live.swf.date%
-FOR /f %%i in ('echo %iqiyi.in.live.swf%^|mimised.runexe "s/http:.*flashplayer.*\///"') DO set iqiyi.in.live.swf.File=%%i
-REM ECHO in.live.File : %iqiyi.in.live.swf.File%
-mimiwget.runexe --timeout=30 -c %iqiyi.in.live.swf% -O "%runpath%iqiyi\in.live\%iqiyi.in.live.swf.date%\iqiyi.in.live.%iqiyi.in.live.swf.File%">nul 2>nul
+mimiwget.runexe --timeout=30 --spider "http://player.pptv.com/v/g1W0MpoAcK4Rjicc.swf" 2>"%runpath%TempDown\pptv.in.live.html"
+FOR /f %%i in ('type "%runpath%TempDown\pptv.in.live.html"^|findstr "Location:" 2^>nul^|mimised.runexe "s/.*http:/http:/g;s/\.swf.*/\.swf/g"') DO SET pptv.in.live.swf=%%i
+ECHO in.live : %pptv.in.live.swf%
+FOR /f %%i in ('echo %pptv.in.live.swf%^|mimised.runexe "s/.*live\///g;s/\/.*//g"') DO set pptv.in.live.swf.Date=%%i
+MD "%runpath%pptv\in.live\%pptv.in.live.swf.date%">nul 2>nul
+ECHO %pptv.in.live.swf%>"%runpath%pptv\in.live\%pptv.in.live.swf.date%\in.live.downlink.txt"
+REM ECHO in.live.date : %pptv.in.live.swf.date%
+FOR /f %%i in ('echo %pptv.in.live.swf%^|mimised.runexe "s/.*[0-9]\///g"') DO set pptv.in.live.swf.File=%%i
+REM ECHO in.live.File : %pptv.in.live.swf.File%
+mimiwget.runexe --timeout=30 -c %pptv.in.live.swf% -O "%runpath%pptv\in.live\%pptv.in.live.swf.date%\pptv.in.live.%pptv.in.live.swf.File%">nul 2>nul
 GOTO :TrueEND
 
 :FUN_TimeToCheck
