@@ -224,8 +224,8 @@ DEL /q "%runpath%TempDown\pptv.in.live.html">nul 2>nul
 ECHO 聚力 uptime : %date%%time%
 
 REM 站内播放
-mimiwget.runexe --timeout=30 --spider "http://player.pptv.com/v/F21k41IlHFq9O6M.swf" -O "%runpath%TempDown\pptv.in.html">nul 2>nul
-FOR /f "delims== tokens=2*" %%i in ('type "%runpath%TempDown\pptv.in.html"^|findstr "Location:" 2^>nul^|mimised.runexe "s/.*http:/http:/g;s/\.swf.*/\.swf/g"') DO SET pptv.in.swf=%%i
+mimiwget.runexe --timeout=30 --spider "http://player.pptv.com/v/F21k41IlHFq9O6M.swf" 2>"%runpath%TempDown\pptv.in.html"
+FOR /f %%i in ('type "%runpath%TempDown\pptv.in.html"^|findstr "Location:" 2^>nul^|mimised.runexe "s/.*http:/http:/g;s/\.swf.*/\.swf/g"') DO SET pptv.in.swf=%%i
 ECHO in : %pptv.in.swf%
 pause
 FOR /f %%i in ('echo %iqiyi.in.swf%^|mimised.runexe "s/http:.*flashplayer\///;s/\/.*//"') DO set iqiyi.in.swf.Date=%%i
