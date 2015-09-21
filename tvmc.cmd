@@ -18,7 +18,7 @@ CALL :FUN_17173
 REM CALL :FUN_ku6 dbing
 REM CALL :FUN_56 dbing
 REM CALL :FUN_pps dbing
-title VER:2015.09.21.27 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
+title VER:2015.09.21.28 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
 SET/p echoloop=离下次检测还有 : <NUL
 REM 2h=7200s 4h=14400s 8h=28800s
 mimitimeout.runexe /t 14400 /nobreak
@@ -268,18 +268,20 @@ REM ECHO in.date : %I7173.in.swf.date%
 FOR /f %%i in ('echo %I7173.in.swf%^|mimised.runexe "s/.*\///g"') DO set I7173.in.swf.File=%%i
 REM ECHO in.File : %I7173.in.swf.File%
 mimiwget.runexe --timeout=30 -c %I7173.in.swf% -O "%runpath%17173\in\%I7173.in.swf.date%\17173.in.%I7173.in.swf.File%">nul 2>nul
-pause
+
 REM 站内直播
-mimiwget.runexe --timeout=30 --spider "http://player.pptv.com/v/g1W0MpoAcK4Rjicc.swf" 2>"%runpath%TempDown\pptv.in.live.html"
-FOR /f %%i in ('type "%runpath%TempDown\pptv.in.live.html"^|findstr "Location:" 2^>nul^|mimised.runexe "s/.*http:/http:/g;s/\.swf.*/\.swf/g"') DO SET pptv.in.live.swf=%%i
-ECHO in.live : %pptv.in.live.swf%
-FOR /f %%i in ('echo %pptv.in.live.swf%^|mimised.runexe "s/.*live\///g;s/\/.*//g"') DO set pptv.in.live.swf.Date=%%i
-MD "%runpath%pptv\in.live\%pptv.in.live.swf.date%">nul 2>nul
-ECHO %pptv.in.live.swf%>"%runpath%pptv\in.live\%pptv.in.live.swf.date%\in.live.downlink.txt"
-REM ECHO in.live.date : %pptv.in.live.swf.date%
-FOR /f %%i in ('echo %pptv.in.live.swf%^|mimised.runexe "s/.*[0-9]\///g"') DO set pptv.in.live.swf.File=%%i
-REM ECHO in.live.File : %pptv.in.live.swf.File%
-mimiwget.runexe --timeout=30 -c %pptv.in.live.swf% -O "%runpath%pptv\in.live\%pptv.in.live.swf.date%\pptv.in.live.%pptv.in.live.swf.File%">nul 2>nul
+mimiwget.runexe --timeout=30 -c "http://v.17173.com/live/list/liveHall.htm" -O "%runpath%TempDown\17173.in.live.html">nul 2>nul
+FOR /f "delims=:" %%i in ('type "%runpath%TempDown\17173.in.live.html"^|findstr "swfVersion" 2^>nul') DO SET I7173.in.live.swf=%%i
+REM ECHO %I7173.in.live.swf%
+FOR /f %%i in ('echo %I7173.in.live.swf%^|mimised.runexe "s/.*\s'//g;s/'.*//g"') DO set I7173.in.live.swf.Date=%%i
+MD "%runpath%17173\in.live\%I7173.in.live.swf.date%">nul 2>NUL
+SET I7173.in.live.swf=http://f.v.17173cdn.com/%I7173.in.live.swf.date%/flash/Pad.swf
+ECHO %I7173.in.live.swf%>"%runpath%17173\in.live\%I7173.in.live.swf.date%\in.live.downlink.txt"
+ECHO in.live : %I7173.in.live.swf%
+REM ECHO in.live.date : %I7173.in.live.swf.date%
+FOR /f %%i in ('echo %I7173.in.live.swf%^|mimised.runexe "s/.*\///g"') DO set I7173.in.live.swf.File=%%i
+REM ECHO in.live.File : %I7173.in.live.swf.File%
+mimiwget.runexe --timeout=30 -c %I7173.in.live.swf% -O "%runpath%17173\in.live\%I7173.in.live.swf.date%\17173.in.live.%I7173.in.live.swf.File%">nul 2>nul
 GOTO :TrueEND
 
 :FUN_TimeToCheck
