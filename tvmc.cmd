@@ -18,7 +18,7 @@ CALL :FUN_17173
 REM CALL :FUN_ku6 dbing
 REM CALL :FUN_56 dbing
 REM CALL :FUN_pps dbing
-title VER:2015.09.21.28 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
+title VER:2015.09.24.29 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
 SET/p echoloop=离下次检测还有 : <NUL
 REM 2h=7200s 4h=14400s 8h=28800s
 mimitimeout.runexe /t 14400 /nobreak
@@ -260,14 +260,21 @@ REM 站内点播
 mimiwget.runexe --timeout=30 -c "http://v.17173.com/v_1_121/Mjc1NjAxMTQ.html" -O "%runpath%TempDown\17173.in.html">nul 2>nul
 FOR /f "delims==" %%i in ('type "%runpath%TempDown\17173.in.html"^|findstr "swfVersion" 2^>nul') DO SET I7173.in.swf=%%i
 FOR /f %%i in ('echo %I7173.in.swf%^|mimised.runexe "s/.*:\s'//g;s/'.*//g"') DO set I7173.in.swf.Date=%%i
-MD "%runpath%17173\in\%I7173.in.swf.date%">nul 2>nul
+FOR /f %%i in ('echo %I7173.in.swf%^|mimised.runexe "s/.*:\s'//g;s/'.*//g"') DO set I7173.out.swf.Date=%%i
+MD "%runpath%17173\in\%I7173.in.swf.date%">nul 2>NUL
+MD "%runpath%17173\out\%I7173.out.swf.date%">nul 2>nul
 SET I7173.in.swf=http://f.v.17173cdn.com/%I7173.in.swf.date%/flash/Player_file.swf
+SET I7173.out.swf=http://f.v.17173cdn.com/%I7173.out.swf.date%/flash/Player_file_out.swf
 ECHO %I7173.in.swf%>"%runpath%17173\in\%I7173.in.swf.date%\in.downlink.txt"
+ECHO %I7173.out.swf%>"%runpath%17173\out\%I7173.out.swf.date%\out.downlink.txt"
 ECHO in : %I7173.in.swf%
+ECHO out : %I7173.out.swf%
 REM ECHO in.date : %I7173.in.swf.date%
 FOR /f %%i in ('echo %I7173.in.swf%^|mimised.runexe "s/.*\///g"') DO set I7173.in.swf.File=%%i
+FOR /f %%i in ('echo %I7173.out.swf%^|mimised.runexe "s/.*\///g"') DO set I7173.out.swf.File=%%i
 REM ECHO in.File : %I7173.in.swf.File%
 mimiwget.runexe --timeout=30 -c %I7173.in.swf% -O "%runpath%17173\in\%I7173.in.swf.date%\17173.in.%I7173.in.swf.File%">nul 2>nul
+mimiwget.runexe --timeout=30 -c %I7173.out.swf% -O "%runpath%17173\out\%I7173.out.swf.date%\17173.out.%I7173.out.swf.File%">nul 2>nul
 
 REM 站内直播
 mimiwget.runexe --timeout=30 -c "http://v.17173.com/live/list/liveHall.htm" -O "%runpath%TempDown\17173.in.live.html">nul 2>nul
