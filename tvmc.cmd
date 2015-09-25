@@ -6,19 +6,19 @@ path %path%;%runpath%mimiLIB
 MD "%runpath%TempDown">nul 2>nul
 MD "%runpath%iqiyi">nul 2>NUL
 MD "%runpath%letv">nul 2>NUL
-MD "%runpath%youku">nul 2>nul
-CALL :FUN_iqiyi
-CALL :FUN_letv
+MD "%runpath%youku">nul 2>NUL
 CALL :FUN_youku
-CALL :FUN_sohu
-CALL :FUN_qq
 CALL :FUN_tudou
+CALL :FUN_qq
+CALL :FUN_sohu
+CALL :FUN_letv
+CALL :FUN_iqiyi
 CALL :FUN_pptv
 CALL :FUN_17173
 REM CALL :FUN_ku6 dbing
 REM CALL :FUN_56 dbing
 REM CALL :FUN_pps dbing
-title VER:2015.09.24.32 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
+title VER:2015.09.25.33 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
 SET/p echoloop=离下次检测还有 : <NUL
 REM 2h=7200s 4h=14400s 8h=28800s
 mimitimeout.runexe /t 14400 /nobreak
@@ -29,7 +29,7 @@ REM 优酷
 DEL /q "%runpath%TempDown\youku.in.html">nul 2>nul
 DEL /q "%runpath%TempDown\youku.out.loader.html">nul 2>NUL
 DEL /q "%runpath%TempDown\youku.out.player.html">nul 2>nul
-EchoX.runexe -c e4 "优酷 uptime : %date%%time%"
+EchoX.runexe -c 1f "优酷 uptime : %date%%time%"
 
 REM 站内播放
 REM 播放器.swf
@@ -74,7 +74,7 @@ GOTO :TrueEND
 :FUN_tudou
 REM 土豆
 DEL /q "%runpath%TempDown\tudou.in.html">nul 2>nul
-EchoX.runexe -c e9 "土豆 uptime : %date%%time%"
+EchoX.runexe -c 2e "土豆 uptime : %date%%time%"
 
 REM 站内播放
 mimiwget.runexe --timeout=30 -c "http://www.tudou.com/albumplay/HzK-zOzBjxo/tPHBZ9xQGmU.html" -O "%runpath%TempDown\tudou.in.html">nul 2>nul
@@ -91,7 +91,7 @@ GOTO :TrueEND
 
 :FUN_qq
 REM QQ
-EchoX.runexe -c e2 "腾讯 uptime : %date%%time%"
+EchoX.runexe -c 3d "腾讯 uptime : %date%%time%"
 
 REM 站内播放
 ECHO in : http://imgcache.qq.com/tencentvideo_v1/player/TencentPlayer.swf
@@ -107,7 +107,7 @@ GOTO :TrueEND
 :FUN_sohu
 REM 搜狐
 DEL /q "%runpath%TempDown\sohu.in.html">nul 2>nul
-EchoX.runexe -c e3 "搜狐 uptime : %date%%time%"
+EchoX.runexe -c 4c "搜狐 uptime : %date%%time%"
 
 REM 站内播放
 mimiwget.runexe --timeout=30 -c "http://tv.sohu.com/20090316/n262826768.shtml" -O "%runpath%TempDown\sohu.in.html">nul 2>nul
@@ -127,7 +127,7 @@ REM 乐视
 DEL /q "%runpath%TempDown\letv.in.html">nul 2>nul
 DEL /q "%runpath%TempDown\letv.out.html">nul 2>nul
 DEL /q "%runpath%TempDown\letv.in.live.html">nul 2>nul
-EchoX.runexe -c e5 "乐视 uptime : %date%%time%"
+EchoX.runexe -c 5b "乐视 uptime : %date%%time%"
 
 REM 站内播放
 mimiwget.runexe --timeout=30 -c "http://www.letv.com/ptv/vplay/22840741.html" -O "%runpath%TempDown\letv.in.html">nul 2>nul
@@ -178,7 +178,7 @@ REM 爱奇艺
 DEL /q "%runpath%TempDown\iqiyi.in.html">nul 2>nul
 DEL /q "%runpath%TempDown\iqiyi.out.html">nul 2>nul
 DEL /q "%runpath%TempDown\iqiyi.in.live.html">nul 2>nul
-EchoX.runexe -c e8 "爱奇艺 uptime : %date%%time%"
+EchoX.runexe -c 6a "爱奇艺 uptime : %date%%time%"
 
 REM 站内播放
 mimiwget.runexe --timeout=30 -c "http://www.iqiyi.com/dianshiju/20110608/5549a1c66a33f8e3.html" -O "%runpath%TempDown\iqiyi.in.html">nul 2>nul
@@ -221,7 +221,7 @@ GOTO :TrueEND
 REM 聚力
 DEL /q "%runpath%TempDown\pptv.in.html">nul 2>nul
 DEL /q "%runpath%TempDown\pptv.in.live.html">nul 2>nul
-EchoX.runexe -c e0 "聚力 uptime : %date%%time%"
+EchoX.runexe -c 79 "聚力 uptime : %date%%time%"
 
 REM 站内播放
 mimiwget.runexe --timeout=30 --spider "http://player.pptv.com/v/F21k41IlHFq9O6M.swf" 2>"%runpath%TempDown\pptv.in.html"
@@ -254,7 +254,7 @@ DEL /q "%runpath%TempDown\17173.in.html">nul 2>nul
 DEL /q "%runpath%TempDown\17173.in.live.html">nul 2>NUL
 DEL /q "%runpath%TempDown\17173.out.html">nul 2>nul
 DEL /q "%runpath%TempDown\17173.out.live.html">nul 2>nul
-EchoX.runexe -c ed "17173 uptime : %date%%time%"
+EchoX.runexe -c 80 "17173 uptime : %date%%time%"
 
 REM 站内点播
 mimiwget.runexe --timeout=30 -c "http://v.17173.com/v_1_121/Mjc1NjAxMTQ.html" -O "%runpath%TempDown\17173.in.html">nul 2>nul
