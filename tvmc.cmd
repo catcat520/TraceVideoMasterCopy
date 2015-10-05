@@ -18,10 +18,11 @@ CALL :FUN_17173
 REM CALL :FUN_ku6 dbing
 REM CALL :FUN_56 dbing
 REM CALL :FUN_pps dbing
-title VER:2015.09.25.33 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
+title VER:2015.10.05.34 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
 SET/p echoloop=离下次检测还有 : <NUL
 REM 2h=7200s 4h=14400s 8h=28800s
 mimitimeout.runexe /t 14400 /nobreak
+ECHO.
 GOTO :StartTrace
 
 :FUN_youku
