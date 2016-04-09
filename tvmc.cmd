@@ -18,7 +18,7 @@ CALL :FUN_17173
 REM CALL :FUN_ku6 dbing
 REM CALL :FUN_56 dbing
 REM CALL :FUN_pps dbing
-title VER:2016.02.12.35 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
+title VER:2016.04.09.36 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
 SET/p echoloop=离下次检测还有 : <NUL
 REM 2h=7200s 4h=14400s 8h=28800s
 mimitimeout.runexe /t 14400 /nobreak
@@ -206,7 +206,7 @@ REM ECHO out.File : %iqiyi.out.swf.File%
 mimiwget.runexe --timeout=30 -c %iqiyi.out.swf% -O "%runpath%iqiyi\out\%iqiyi.out.swf.date%\iqiyi.out.%iqiyi.out.swf.File%">nul 2>nul
 
 REM 站内直播
-mimiwget.runexe --timeout=30 -c "http://www.iqiyi.com/c_19rrgv1kfm/" -O "%runpath%TempDown\iqiyi.in.live.html">nul 2>nul
+mimiwget.runexe --timeout=30 -c "http://www.iqiyi.com/c_19rrgv1kfm.html" -O "%runpath%TempDown\iqiyi.in.live.html">nul 2>nul
 FOR /f "delims== tokens=2*" %%i in ('type "%runpath%TempDown\iqiyi.in.live.html"^|findstr "data-flashplayerparam-flashurl=.*\.swf" 2^>nul^|mimised.runexe "s/\""//g"') DO SET iqiyi.in.live.swf=%%i
 ECHO in.live : %iqiyi.in.live.swf%
 FOR /f %%i in ('echo %iqiyi.in.live.swf%^|mimised.runexe "s/http:.*flashplayer\///;s/\/.*//"') DO set iqiyi.in.live.swf.Date=%%i
