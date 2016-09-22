@@ -1,6 +1,7 @@
 @ECHO OFF
 CLS
 :StartTrace
+DEL "%runpath%TempDown\*.html">NUL 2>nul
 set runpath=%~dp0
 path %path%;%runpath%mimiLIB
 MD "%runpath%TempDown">nul 2>nul
@@ -18,7 +19,7 @@ CALL :FUN_17173
 REM CALL :FUN_ku6 dbing
 REM CALL :FUN_56 dbing
 REM CALL :FUN_pps dbing
-title VER:2016.09.22.37 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
+title VER:2016.09.22.39 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
 SET/p echoloop=离下次检测还有 : <NUL
 REM 2h=7200s 4h=14400s 8h=28800s
 mimitimeout.runexe /t 14400 /nobreak
@@ -34,8 +35,7 @@ EchoX.runexe -c 1f "优酷 uptime : %date%%time%"
 
 REM 站内播放
 REM 播放器.swf
-mimiwget.runexe --timeout=30 -c "http://v.youku.com/v_show/id_XNjA0Mjk0MzE2.html" -O "%runpath%TempDown\youku.in.player.html">nul 2>nul
-REM find 替换 findstr 转换 UTF-8 至 MS936
+mimiwget.runexe --timeout=30 -c "http://v.youku.com/v_show/id_XNzYyMjgwNDY4.html?beta&&spm=0.0.item_XNzYyMjgwNDY4.A.p4RtuE&from=y1.2-2.4.2" -O "%runpath%TempDown\youku.in.player.html">nul 2>nul
 FOR /f %%i in ('type "%runpath%TempDown\youku.in.player.html"^|find "playerUrl" 2^>nul^|mimised.runexe "s/.*playerUrl:'//g;s/\.swf.*/.swf/g;"') DO SET youku.in.player.swf=%%i
 ECHO in.player.swf : %youku.in.player.swf%
 FOR /f %%i in ('echo %youku.in.player.swf%^|mimised.runexe "s/.*com\/v//g;s/\/v.*//g"') DO set youku.in.player.swf.Date=%%i
@@ -48,8 +48,8 @@ mimiwget.runexe --timeout=30 -c %youku.in.player.swf% -O "%runpath%youku\in\%you
 
 REM 站外播放
 REM 调用.swf
-mimiwget.runexe --timeout=30 -c http://v.youku.com/v_show/id_XMTI1ODc5MjU2NA==.html -O "%runpath%TempDown\youku.out.loader.html">nul 2>nul
-FOR /f %%i in ('type "%runpath%TempDown\youku.out.loader.html"^|findstr "playerUrl" 2^>nul^|mimised.runexe "s/.*http/http/g;s/\.swf.*;/.swf/g"') DO SET youku.out.loader.swf=%%i
+mimiwget.runexe --timeout=30 -c "http://v.youku.com/v_show/id_XMTI1ODg0NjMyNA==.html?from=y1.6-97.3.1.af02ac580b5711e5a080" -O "%runpath%TempDown\youku.out.loader.html">nul 2>nul
+FOR /f %%i in ('type "%runpath%TempDown\youku.out.loader.html"^|find "playerUrl" 2^>nul^|mimised.runexe "s/.*playerUrl:'//g;s/\.swf.*/.swf/g;"') DO SET youku.out.loader.swf=%%i
 ECHO out.loader.swf : %youku.out.loader.swf%
 FOR /f %%i in ('echo %youku.out.loader.swf%^|mimised.runexe "s/.*com\/v//g;s/\/v.*//g"') DO set youku.out.loader.swf.Date=%%i
 MD "%runpath%youku\out\%youku.out.loader.swf.date%">nul 2>nul
