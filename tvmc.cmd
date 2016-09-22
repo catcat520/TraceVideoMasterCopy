@@ -18,7 +18,7 @@ CALL :FUN_17173
 REM CALL :FUN_ku6 dbing
 REM CALL :FUN_56 dbing
 REM CALL :FUN_pps dbing
-title VER:2016.04.09.36 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
+title VER:2016.09.22.37 TraceVideoMasterCopy , 跟踪和记录原始的影音网页内容
 SET/p echoloop=离下次检测还有 : <NUL
 REM 2h=7200s 4h=14400s 8h=28800s
 mimitimeout.runexe /t 14400 /nobreak
@@ -34,8 +34,8 @@ EchoX.runexe -c 1f "优酷 uptime : %date%%time%"
 
 REM 站内播放
 REM 播放器.swf
-mimiwget.runexe --timeout=30 -c http://v.youku.com/v_show/id_XNzYxNzM0MDk2.html -O "%runpath%TempDown\youku.in.player.html">nul 2>nul
-FOR /f %%i in ('type "%runpath%TempDown\youku.in.player.html"^|findstr "playerUrl" 2^>nul^|mimised.runexe "s/.*http/http/g;s/\.swf.*;/.swf/g"') DO SET youku.in.player.swf=%%i
+mimiwget.runexe --timeout=30 -c "http://v.youku.com/v_show/id_XNjA0Mjk0MzE2.html" -O "%runpath%TempDown\youku.in.player.html">nul 2>nul
+FOR /f %%i in ('type "%runpath%TempDown\youku.in.player.html"^|find "playerUrl" 2^>nul^|mimised.runexe "s/.*playerUrl:'//g;s/\.swf.*/.swf/g;"') DO SET youku.in.player.swf=%%i
 ECHO in.player.swf : %youku.in.player.swf%
 FOR /f %%i in ('echo %youku.in.player.swf%^|mimised.runexe "s/.*com\/v//g;s/\/v.*//g"') DO set youku.in.player.swf.Date=%%i
 MD "%runpath%youku\in\%youku.in.player.swf.date%">nul 2>nul
