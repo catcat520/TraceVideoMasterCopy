@@ -35,6 +35,7 @@ EchoX.runexe -c 1f "优酷 uptime : %date%%time%"
 REM 站内播放
 REM 播放器.swf
 mimiwget.runexe --timeout=30 -c "http://v.youku.com/v_show/id_XNjA0Mjk0MzE2.html" -O "%runpath%TempDown\youku.in.player.html">nul 2>nul
+REM find 替换 findstr 转换 UTF-8 至 MS936
 FOR /f %%i in ('type "%runpath%TempDown\youku.in.player.html"^|find "playerUrl" 2^>nul^|mimised.runexe "s/.*playerUrl:'//g;s/\.swf.*/.swf/g;"') DO SET youku.in.player.swf=%%i
 ECHO in.player.swf : %youku.in.player.swf%
 FOR /f %%i in ('echo %youku.in.player.swf%^|mimised.runexe "s/.*com\/v//g;s/\/v.*//g"') DO set youku.in.player.swf.Date=%%i
